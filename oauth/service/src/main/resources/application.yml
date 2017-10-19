@@ -1,0 +1,64 @@
+#spring:
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  resources:
+#    add-mappings: false
+
+#server:
+#  error:
+#    include-stacktrace: on-trace-param
+#    whitelabel:
+#      enabled: false
+#    path: /remote/error
+
+#eureka:
+#  instance:
+#    lease-expiration-duration-in-seconds: 8
+#    lease-renewal-interval-in-seconds: 3
+#  client:
+#    registry-fetch-interval-seconds: 3
+#    healthcheck:
+#      enabled: true
+#    region: default
+#    prefer-same-zone-eureka: false
+#    use-dns-for-fetching-service-urls: false
+#    initial-instance-info-replication-interval-seconds: 3
+#    instance-info-replication-interval-seconds: 5
+#    eureka-service-url-poll-interval-seconds: 10
+    
+#ribbon:
+#  okhttp:
+#    enabled: true
+#  ServerListRefreshInterval: 8
+
+#spring:
+# 开发模式打开，端口号自行调整
+#  devtools:
+#    livereload:
+#      port: 35001
+#    restart:
+#      exclude: static/**,public/**
+#  aop:
+#    proxy-target-class: true
+hystrix:
+  config:
+    stream:
+      maxConcurrentConnections: 500
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+          strategy: SEMAPHORE
+          semaphore:
+            maxConcurrentRequests: 2000
+        timeout:
+          enabled: true
+      circuitBreaker:
+        enabled: true
+      fallback:
+        enabled: true
+#  threadpool:
+#    default:
+#      coreSize: 2000

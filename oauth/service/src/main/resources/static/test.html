@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#btn").click(function(){
+// 		files | alert("must choose file");return;
+    	formData =new FormData();
+		var files = $('#files').prop('files');
+		if(files.length == 0){
+			alert("请选择有效文件上传");
+			return;
+		}
+		for (var i = 0; i < files.length; i++) {
+	    	formData.append("files", files[i], files[i].name);
+			console.log("Filename " + files[i].name);
+		}
+// 		formData.append("id", "role-no1");
+		formData.append("message", "消息来了");
+    	formData.append('role', new Blob([JSON.stringify({
+    	                "id": "role-no1",
+    	                "name": "管理员"                    
+    	            })], {
+    	                type: "application/json"
+    	            }));
+    	formData.append('user', new Blob([JSON.stringify({
+    	                "id": "user-no1",
+    	                "name": "张三"                    
+    	            })], {
+    	                type: "application/json"
+    	            }));
+    	$.ajax({
+    	    url: 'http://localhost:3101/role/upload/cd',
+    	    type: 'POST',
+    	    cache: false,
+    	    data: formData,
+    	    crossDomain: true, 
+    	    processData: false,
+    	    contentType: false
+    	}).done(function(data) {
+    		console.log(data)
+    	}).fail(function(data) {
+    		
+    	});
+    });
+	
+});
+</script>
+</head>
+<body>
+<input id="files" type="file" name="files" multiple />
+<input type="button" id="btn" value="上传"/>
+</body>
+</html>

@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: ${application.oauth-service.name}
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: ${config.application.name}
+      username: ${registry-config.user.name}
+      password: ${registry-config.user.password}
+      name: ${application.oauth-service.name}
+      profile: ${this.application.profile}
+      label: ${this.application.label}
+  http:
+    encoding:
+      force: true
+  aop:
+    proxy-target-class: true
+# 开发模式打开，端口号自行调整
+#  devtools:
+#    livereload:
+#      port: 35000
+#    restart:
+#      exclude: static/**,public/**
+
+#health:
+#  config:
+#    enabled: true
+
+
+server:
+  port: ${server.port}
+  error:
+    include-stacktrace: on-trace-param
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 8
+    lease-renewal-interval-in-seconds: 3
+    prefer-ip-address: true
+  client:
+    registry-fetch-interval-seconds: 3
+    healthcheck:
+      enabled: false
+    region: default
+    prefer-same-zone-eureka: false
+    use-dns-for-fetching-service-urls: false
+    initial-instance-info-replication-interval-seconds: 3
+    instance-info-replication-interval-seconds: 5
+    eureka-service-url-poll-interval-seconds: 10
+    service-url:
+      defaultZone: http://${registry-config.user.name}:${registry-config.user.password}@${peer1.ip.address}:${peer1.server.port}/eureka/,http://${registry-config.user.name}:${registry-config.user.password}@${peer2.ip.address}:${peer2.server.port}/eureka/

@@ -1,0 +1,254 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>oauth-gateway</artifactId>
+
+	<parent>
+		<groupId>poet</groupId>
+		<artifactId>oauth-parent</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	
+	<properties>
+		<this.application.name>${this.application.prefix}-${this.module-gateway.suffix}</this.application.name>
+		<!-- profile for production -->
+		<config.global.env-pro.uri>tags/release_tag_20170712_01</config.global.env-pro.uri>
+		<config.application.env-pro.uri>tags/release_tag_20170712_01</config.application.env-pro.uri>
+	</properties>
+	
+	<dependencies>
+		
+		<!-- Feign Client -->
+		<dependency>
+			<groupId>armor</groupId>
+			<artifactId>armor-feign</artifactId>
+		</dependency>
+	
+		<!-- ORM -->
+		<dependency>
+			<groupId>armor</groupId>
+			<artifactId>armor-orm</artifactId>
+		</dependency>
+	
+		<!-- Code Binder -->
+		<dependency>
+			<groupId>armor</groupId>
+			<artifactId>armor-codebinder</artifactId>
+		</dependency>
+	
+		<!-- Gateway -->
+		<dependency>
+			<groupId>armor</groupId>
+			<artifactId>armor-gateway</artifactId>
+		</dependency>
+	
+		<!-- OAuth API -->
+		<dependency>
+			<groupId>poet</groupId>
+			<artifactId>oauth-spi</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		
+		<!-- OAuth Client -->
+		<dependency>
+			<groupId>poet</groupId>
+			<artifactId>oauth-client</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		
+		<!-- MySQL JDBC -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+        
+		
+		<!-- Spring Cloud Starter Zuul ===> Import from Spring Cloud -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-zuul</artifactId> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-tomcat</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-logging</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
+		
+		<!-- Spring Boot Starter Test ===> Import from Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Spring Boot Starter Actuator ===> Import from Spring Boot -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-actuator</artifactId> -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-logging</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.springframework.boot</groupId> -->
+<!-- 					<artifactId>spring-boot-starter-tomcat</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions> -->
+<!-- 		</dependency> -->
+		        
+<!--         <dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-hystrix</artifactId> -->
+<!-- 		</dependency> -->
+		
+		<!-- Spring Cloud Starter Hystrix Dashboard ===> Import from Spring Cloud -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.cloud</groupId> -->
+<!-- 			<artifactId>spring-cloud-starter-turbine</artifactId> -->
+<!-- 		</dependency> -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+		
+	</dependencies>
+	
+	<build>
+		
+<!-- 		<resources> -->
+<!-- 			<resource> -->
+<!-- 				<directory>src/main/resources</directory> -->
+<!-- 				<excludes> -->
+<!-- 					<exclude>log4j2.xml</exclude> -->
+<!-- 					<exclude>env/**</exclude> -->
+<!-- 				</excludes> -->
+<!-- 				<filtering>true</filtering> -->
+<!-- 			</resource> -->
+<!-- 			<resource> -->
+<!-- 				<directory>src/main/resources</directory> -->
+<!-- 				<includes> -->
+<!-- 					<include>log4j2.xml</include> -->
+<!-- 				</includes> -->
+<!-- 			</resource> -->
+<!-- 		</resources> -->
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>application.**</include>
+					<include>bootstrap.**</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>application.**</exclude>
+					<exclude>bootstrap.**</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+<!-- 					<fork>true</fork> -->
+				</configuration>
+				<executions>
+	                <execution>
+	                    <goals>
+	                        <goal>repackage</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>resources</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+							<useDefaultDelimiters>false</useDefaultDelimiters>
+							<delimiters>
+								<delimiter>${*}</delimiter>
+							</delimiters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
+		<filters>
+			<filter>../${config.directory}/${config.global.directory-name}/${config.global.env.uri}/${config.default.filter-name}</filter>
+			<filter>../${config.directory}/${this.application.name}/${config.application.env.uri}/${config.default.filter-name}</filter>
+		</filters>
+	</build>
+	
+	<profiles>
+		<profile>
+			<!-- 开发环境 -->
+			<id>dev</id>
+			<properties>
+				<config.global.env.uri>${default.env-dev.label}/${default.env-dev.profile}</config.global.env.uri>
+				<config.application.env.uri>${default.env-dev.label}/${default.env-dev.profile}</config.application.env.uri>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>test</id>
+			<properties>
+				<config.global.env.uri>${default.env-test.label}/${default.env-test.profile}</config.global.env.uri>
+				<config.application.env.uri>${default.env-test.label}/${default.env-test.profile}</config.application.env.uri>
+			</properties>
+<!-- 			<activation> -->
+<!-- 				<activeByDefault>true</activeByDefault> -->
+<!-- 			</activation> -->
+		</profile>
+		<profile>
+			<!-- 生产环境 -->
+			<id>pro</id>
+			<properties>
+				<config.global.env.uri>${config.global.env-pro.uri}</config.global.env.uri>
+				<config.application.env.uri>${config.application.env-pro.uri}</config.application.env.uri>
+			</properties>
+<!-- 			<activation> -->
+<!-- 				<activeByDefault>true</activeByDefault> -->
+<!-- 			</activation> -->
+		</profile>
+		
+	</profiles>
+	
+</project>
